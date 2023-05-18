@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
+    function APP() { 
+        const [counter, setCounter] = React.useState(0);
+        const onClick = () => {
+            //setCounter(counter +1);
+            setCounter((current) => current + 1);
+            /*setCounter 내에서 일어나는 것은
+            counter 을 바꿔주고, ReactDOM.render(<APP/>, root); 이걸 해준다.
+            */
+            /*
+            function increment(current) {
+                return current + 1;
+              }
+              
+              // 상태 업데이트
+              setCounter(increment(counter));
+            */
+        };
+        // useState 는 임의의 배열을 준다!!
+        //const [myFavFood, mySecondFavFood] = food; == const myFavFood = food[0];
+        return (
+        <div>
+            <h3>Total Click: {counter}</h3>
+            <button onClick={onClick}>Click This</button>
+        </div>
+        );
+    }
+    ReactDOM.render(<APP/>, root); //첫글자 = 무조건 대문자 //함수로 만들어 줘야 '() => ' 사용 가능: <APP/>
+</script>
+
+</html>

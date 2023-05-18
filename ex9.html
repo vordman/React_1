@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script> <!-- 틀린거 찾기-->
+<script type="text/babel">
+    function Btn({ text, changeValue, fontSize = 20}) {
+        console.log(text,"was rendered") //20 = 정의되지 않은것에 적용됨(Continue)
+        return <button
+            onClick={changeValue}
+            style={{
+                backgroundColor: "tomato",
+                color: "white",
+                padding: "10px 20px",
+                border: 0,
+                borderRadius: 10,
+                fontSize:fontSize,
+            }}>{text}</button>
+    }
+    const MemorizedBtn = React.memo(Btn);
+    MemorizedBtn.propTypes = {
+        text: PropTypes.string.isRequired,/* 필수인것에 넣음*/
+        fontSize: PropTypes.number,
+    }
+    function APP() {
+        const [value, setValue] = React.useState("Save Changes")
+        const changeValue = () => setValue("Revert Changes")
+
+    return (
+        <div>
+            <MemorizedBtn text={value} changeValue={changeValue} fontSize={18}/>
+            <MemorizedBtn text={"Continue"} />
+        </div> //Btn({text:"Save Changes"})
+        );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<APP />, root);
+</script>
+
+</html>
